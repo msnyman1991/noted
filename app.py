@@ -4,32 +4,44 @@ import pymongo
 from pymongo import MongoClient
 import datetime
 import pprint
+from jinja2 import Environment
+from jinja2.loaders import FileSystemLoader
+import requests
+
+app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
 
 # MongoDB client
 db = client.noted.user_notes
 
-# Note
-author = "Morne"
-date = datetime.datetime.utcnow()
-tags = "[my-note]"
-note_topic = input("Note Topic: ")
-note = input("Write a Note: ")
+@app.route('/')
+def note():
+    return render_template('note.html')
 
-post = {"author": f"{author}",
-        "topic": f"{note_topic}",
-         "text": f"{note}",
-         "tags": f"{tags}",
-         "date": f"{date}"}
+@app.route('/', methods=["POST"])
+def post_note():
 
-# Post note to DB
-posts = db.posts
-post_id = posts.insert_one(post).inserted_id
-post_id
+        # Get data from Note input form
+        note_topic = request.form['note_topic']
+        note = request.form['note']
 
-# Find all notes for user
-find_notes = posts.find({"author": f"{author}"})
+        # Note
+        author = "Morne"
+        date = datetime.datetime.utcnow()
+        tags = "[my-note]"
 
-for document in find_notes:
-        print(document['text'])
+        # Post note to DB
+        posts = db.posts
+        post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags })
+        post_id
+
+        env = Environment(loader=FileSystemLoader('templates'))
+        tmpl = env.get_template('note.html')
+        return flask.Response(tmpl.generate(result=posts))
+
+# # Find all notes for user
+# find_notes = posts.find({"author": f"{author}"})
+
+# for document in find_notes:
+#         print(document['text'])
