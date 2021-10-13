@@ -15,11 +15,15 @@ client = MongoClient('localhost', 27017)
 # MongoDB client
 db = client.noted.user_notes
 
-@app.route('/')
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/create_note')
 def note():
     return render_template('note.html')
 
-@app.route('/', methods=["POST"])
+@app.route('/create_note', methods=["POST"])
 def post_note():
 
         # Get data from Note input form
