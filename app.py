@@ -15,7 +15,7 @@ client = MongoClient('localhost', 27017)
 # MongoDB client
 db = client.noted.user_notes
 
-@app.route('/home')
+@app.route('/')
 def home():
     return render_template('home.html')
 
@@ -44,8 +44,18 @@ def post_note():
         tmpl = env.get_template('note.html')
         return flask.Response(tmpl.generate(result=posts))
 
-# # Find all notes for user
-# find_notes = posts.find({"author": f"{author}"})
+# Find all notes for user
+@app.route('/my_notes')
+def find_notes():
+    posts = db.posts
+    author = "Morne"
+    find_notes = posts.find({"author": f"{author}"})
 
-# for document in find_notes:
-#         print(document['text'])
+    notes = []
+    for x in find_notes:
+        notes.append(x)
+
+    env = Environment(loader=FileSystemLoader('templates'))
+    tmpl = env.get_template('view_notes.html')
+    return flask.Response(tmpl.generate(result=notes))
+
