@@ -1,12 +1,10 @@
 import flask
 from flask import Flask,render_template,request
-import pymongo
 from pymongo import MongoClient
 import datetime
-import pprint
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
-import requests
+
 
 app = Flask(__name__)
 
@@ -14,6 +12,10 @@ client = MongoClient('localhost', 27017)
 
 # MongoDB client
 db = client.noted.user_notes
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 @app.route('/')
 def home():
