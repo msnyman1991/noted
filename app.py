@@ -4,7 +4,8 @@ from pymongo import MongoClient
 import datetime
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
-
+import json
+from bson.json_util import dumps
 
 app = Flask(__name__)
 
@@ -20,6 +21,10 @@ def login():
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/all_notes')
+def all_notes():
+    return render_template('all_notes.html')
 
 @app.route('/create_note')
 def note():
@@ -43,7 +48,7 @@ def post_note():
         post_id
 
         env = Environment(loader=FileSystemLoader('templates'))
-        tmpl = env.get_template('note.html')
+        tmpl = env.get_template('all_notes.html')
         return flask.Response(tmpl.generate(result=posts))
 
 # Find all notes for user
@@ -59,5 +64,5 @@ def find_notes():
 
     env = Environment(loader=FileSystemLoader('templates'))
     tmpl = env.get_template('view_notes.html')
-    return flask.Response(tmpl.generate(result=notes))
+    return flask.Response(tmpl.generate(result=dumps(notes)))
 
