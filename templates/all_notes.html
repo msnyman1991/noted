@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
     <link rel="stylesheet" type="text/css" href="static/styles/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   
 </head>
-
 <body>
-    <div class="container">
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <form method="post" action="create_note">
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Note title</label>
-                    <input type="text" class="form-control" name="note_topic">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">Enter your note</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" name="note"></textarea>
-                </div>
-                <div class="input-group-append">
-                    <input class="btn btn-success" type="submit" value="Create note">
-                </div>
-                <br>
-                <div class="mb-5">
-                    <a href="http://127.0.0.1:5000/" class="btn btn-primary">Home</a>
-                </div>
-            </form>
+
+<div class="container">
+    <div id="myData">
+        <div class="col" >
+            <div class="card" style="width: 18rem; height: 35rem; margin:30px">
+                <form method="post" action="create_note">
+                    <div class="card-body">
+                        <label for="exampleFormControlInput1" class="form-label"><h1>Note title</h1></label>
+                        <input type="text" class="form-control" name="note_topic">
+                    </div>
+                    <div class="card-body">
+                        <label for="exampleFormControlTextarea1" class="form-label"><h4>Enter your note</h4></label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" name="note"></textarea>
+                    </div>
+                    <div class="card-body">
+                        <input class="btn btn-success btn-lg px-4" type="submit" value="Create note">
+                    </div>
+                    <br>
+                    <div class="card-body">
+                        <a href="http://127.0.0.1:5000/" class="btn btn-primary btn-lg px-4">Home</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -47,38 +47,29 @@
             });
         function appendData(data) {
             var mainContainer = document.getElementById("myData");
+            mainContainer.className = 'row row-cols-3 row-cols-md-3 g-4';
             for (var i = 0; i < data.length; i++) {
+
+                var Outerdiv = document.createElement('div');
+                Outerdiv.className = 'col';
                 
-                var iDiv = document.createElement('div');
-
-                iDiv.id = 'myData';
-                iDiv.className = 'container';
-                document.getElementsByTagName('body')[0].appendChild(iDiv);
-
-                // Now create and append to iDiv
-
-                var innerDiv3 = document.createElement('div');
-                innerDiv3.className = 'row'
-
-                var innerDiv = document.createElement('div');
-                innerDiv.className = 'col';
-
-                var innerDiv2 = document.createElement('div');
-                innerDiv2.innerHTML = 'Note Topic: ' + data[i].note_topic + ' Note: ' + data[i].note;
-                innerDiv2.className = 'card';
+                var InnerDiv = document.createElement('div');
+                InnerDiv.className = 'card';
+                InnerDiv.setAttribute("style","width:18rem; height:35rem; margin:30px");
                 
-                
-                // The variable iDiv is still good... Just append to it.
-                
-                iDiv.appendChild(innerDiv3);
-                innerDiv3.appendChild(innerDiv);
-                innerDiv.appendChild(innerDiv2);
+                document.getElementsByTagName('body')[0].appendChild(InnerDiv);
+
+                var BodyDiv = document.createElement('div');
+                BodyDiv.className = 'card-body';
+                BodyDiv.innerHTML = '<h1>'+data[i].note_topic+'</h1>' +  '<h4>'+data[i].note+'</h4>';
+               
+                mainContainer.appendChild(Outerdiv);
+                Outerdiv.appendChild(InnerDiv);
+                InnerDiv.appendChild(BodyDiv);
+   
             }
         }
 
-
-
-        
     </script>
 </body>
 </html>
