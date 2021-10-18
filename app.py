@@ -1,5 +1,5 @@
 import flask
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect
 from pymongo import MongoClient
 import datetime
 from jinja2 import Environment
@@ -7,6 +7,7 @@ from jinja2.loaders import FileSystemLoader
 import json
 from bson.json_util import dumps
 from bson.objectid import ObjectId
+
 
 app = Flask(__name__)
 
@@ -45,25 +46,24 @@ def post_note():
 
         # Post note to DB
         posts = db.posts
-        post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags })
+        post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags})
         post_id
-
+        
         env = Environment(loader=FileSystemLoader('templates'))
-        tmpl = env.get_template('all_notes.html')
-        return flask.Response(tmpl.generate(result=posts))
+        return redirect("/all_notes")
 
 @app.route('/delete_note', methods=['GET', 'POST'])
 def delete_note():
 
-        _id = ""
+        noteId = request.form['_id']
+        print(noteId)
         db = client.noted.user_notes
         posts = db.posts
-        delete = posts.delete_one({'_id': ObjectId(_id)})
+        delete = posts.delete_one({ '_id': noteId})
         delete
 
         env = Environment(loader=FileSystemLoader('templates'))
-        tmpl = env.get_template('all_notes.html')
-        return flask.Response(tmpl.generate(result="Hello"))
+        return redirect("/all_notes")
 
 # Find all notes for user
 @app.route('/my_notes')
