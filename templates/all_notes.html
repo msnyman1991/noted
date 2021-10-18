@@ -96,7 +96,7 @@
 
                 var BodyDiv = document.createElement('div');
                 BodyDiv.className = 'card-body';
-                BodyDiv.innerHTML = '<h1>'+data[i].note_topic+'</h1>' +  '<h4>'+data[i].note+'</h4>';
+                BodyDiv.innerHTML = '<h1>'+data[i].note_topic+'</h1>' +  '<h4>'+data[i].note+'</h4>' + '<form method="post" action="delete_note"><input class="btn btn-danger btn-lg px-4" type="submit" value="Delete"></form>' 
                
                 mainContainer.appendChild(Outerdiv);
                 Outerdiv.appendChild(InnerDiv);

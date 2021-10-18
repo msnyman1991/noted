@@ -6,6 +6,7 @@ from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
 import json
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -50,6 +51,19 @@ def post_note():
         env = Environment(loader=FileSystemLoader('templates'))
         tmpl = env.get_template('all_notes.html')
         return flask.Response(tmpl.generate(result=posts))
+
+@app.route('/delete_note', methods=['GET', 'POST'])
+def delete_note():
+
+        _id = ""
+        db = client.noted.user_notes
+        posts = db.posts
+        delete = posts.delete_one({'_id': ObjectId(_id)})
+        delete
+
+        env = Environment(loader=FileSystemLoader('templates'))
+        tmpl = env.get_template('all_notes.html')
+        return flask.Response(tmpl.generate(result="Hello"))
 
 # Find all notes for user
 @app.route('/my_notes')
