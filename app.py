@@ -6,7 +6,6 @@ from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
 from bson.json_util import dumps
 
-
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
