@@ -48,13 +48,15 @@
             </div>
         </nav>
         <div class="container-xxl">
+            <h1 style="color: #4fd3ae;">Create a new note.</h1>
+            <h5 style="font-family: Arial, Helvetica, sans-serif;">Fill in the note form below to start creating your first note.</h5>
             <div id="myData">
                 <div class="col">
                 <div class="card-create">
                     <form method="post" action="create_note">
                     <div class="card-body">
                         <label for="exampleFormControlInput1" class="form-label">
-                        <h1>New note</h1>
+                        <h4>Note Topic</h4>
                         </label>
                         <input type="text" class="form-control" name="note_topic" required>
                     </div>
@@ -67,10 +69,11 @@
                     <div class="card-body">
                         <input class="btn btn-success btn-lg px-4" type="submit" value="Create note">
                     </div>
-                    <br>
-                    <div class="card-body">
-                        <a href="http://127.0.0.1:5000/" class="btn btn-primary btn-lg px-4">Home</a>
-                    </div>
+                    </form>
+                    <form>
+                        <div class="card-body">
+                            <a href="http://127.0.0.1:5000/" class="btn btn-primary btn-lg px-4">Home</a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -97,15 +100,23 @@
                     Outerdiv.className = 'col';
                     
                     var InnerDiv = document.createElement('div');
-                    InnerDiv.className = 'card';
+                    InnerDiv.className = 'card-new';
                     
                     document.getElementsByTagName('body')[0].appendChild(InnerDiv);
 
                     var BodyDiv = document.createElement('div');
 
-                    BodyDiv.className = 'card-body';
-                    BodyDiv.innerHTML = '<h1>'+data[i].note_topic+'</h1>' + '<h4>'+data[i].note+'</h4>' + '<form method="POST" action="/delete_note"><input type="hidden" name="_id" value='+data[i].note_id+' /><button type="submit" class="btn btn-danger">Delete</button></form>' 
-
+                    // BodyDiv.className = 'card-new';
+                    BodyDiv.innerHTML = '<form method="POST" action="/edit_note"><div class="card-body"><label for="exampleFormControlTextarea1" class="form-label"><h4>Note Topic</h4></label><input type="text" name="note_topic" class="form-control" value='+data[i].note_topic+' required></div> \
+                                            <div class="card-body"><label for="exampleFormControlTextarea1" class="form-label"><h4>Details</h4></label><textarea class="form-control" name="note" rows="3" type="text"  required>'+data[i].note+'</textarea></div> \
+                                            <input type="hidden" name="update_id" value='+data[i].note_id+' /> \
+                                            <div class="card-body"><button type="submit" class="btn btn-success btn-lg px-4">Update</button></div> \
+                                        </form>'
+                                       +'<form method="POST" action="/delete_note"> \
+                                            <input type="hidden" name="_id" value='+data[i].note_id+' /> \
+                                            <div class="card-body"><button type="submit" class="btn btn-danger btn-lg px-4">Delete</button></div> \
+                                        </form>'
+                    
                     mainContainer.appendChild(Outerdiv);
                     Outerdiv.appendChild(InnerDiv);
                     InnerDiv.appendChild(BodyDiv);
