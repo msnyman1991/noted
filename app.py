@@ -50,7 +50,7 @@ def post_note():
 
     x = print(_id)
     posts.find_one_and_update({"_id": post_id.inserted_id}, 
-                                {"$set": {"note_id": (str(post_id.inserted_id))}})
+        {"$set": {"note_id": (str(post_id.inserted_id))}})
 
     env = Environment(loader=FileSystemLoader('templates'))
     return redirect("/all_notes")
