@@ -4,9 +4,7 @@ from pymongo import MongoClient
 import datetime
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
-import json
 from bson.json_util import dumps
-from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
@@ -48,7 +46,12 @@ def post_note():
         posts = db.posts
         post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags})
         post_id
-        
+        _id = (str(post_id.inserted_id))
+
+        x = print(_id)
+        posts.find_one_and_update({"_id": post_id.inserted_id}, 
+                                 {"$set": {"note_id": (str(post_id.inserted_id))}})
+
         env = Environment(loader=FileSystemLoader('templates'))
         return redirect("/all_notes")
 
@@ -56,10 +59,10 @@ def post_note():
 def delete_note():
 
         noteId = request.form['_id']
-        print(noteId)
+       
         db = client.noted.user_notes
         posts = db.posts
-        delete = posts.delete_one({ '_id': noteId})
+        delete = posts.delete_one({'note_id': noteId})
         delete
 
         env = Environment(loader=FileSystemLoader('templates'))
