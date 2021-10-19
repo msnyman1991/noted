@@ -33,40 +33,40 @@ def note():
 @app.route('/create_note', methods=["POST"])
 def post_note():
 
-        # Get data from Note input form
-        note_topic = request.form['note_topic']
-        note = request.form['note']
+    # Get data from Note input form
+    note_topic = request.form['note_topic']
+    note = request.form['note']
 
-        # Note
-        author = "Morne"
-        date = datetime.datetime.utcnow()
-        tags = "[my-note]"
+    # Note
+    author = "Morne"
+    date = datetime.datetime.utcnow()
+    tags = "[my-note]"
 
-        # Post note to DB
-        posts = db.posts
-        post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags})
-        post_id
-        _id = (str(post_id.inserted_id))
+    # Post note to DB
+    posts = db.posts
+    post_id = posts.insert_one({'note_topic': note_topic, 'note': note, 'author': author, 'date': date, 'tags': tags})
+    post_id
+    _id = (str(post_id.inserted_id))
 
-        x = print(_id)
-        posts.find_one_and_update({"_id": post_id.inserted_id}, 
-                                 {"$set": {"note_id": (str(post_id.inserted_id))}})
+    x = print(_id)
+    posts.find_one_and_update({"_id": post_id.inserted_id}, 
+                                {"$set": {"note_id": (str(post_id.inserted_id))}})
 
-        env = Environment(loader=FileSystemLoader('templates'))
-        return redirect("/all_notes")
+    env = Environment(loader=FileSystemLoader('templates'))
+    return redirect("/all_notes")
 
 @app.route('/delete_note', methods=['GET', 'POST'])
 def delete_note():
 
-        noteId = request.form['_id']
-       
-        db = client.noted.user_notes
-        posts = db.posts
-        delete = posts.delete_one({'note_id': noteId})
-        delete
+    noteId = request.form['_id']
+    
+    db = client.noted.user_notes
+    posts = db.posts
+    delete = posts.delete_one({'note_id': noteId})
+    delete
 
-        env = Environment(loader=FileSystemLoader('templates'))
-        return redirect("/all_notes")
+    env = Environment(loader=FileSystemLoader('templates'))
+    return redirect("/all_notes")
 
 # Find all notes for user
 @app.route('/my_notes')
