@@ -7,8 +7,6 @@ from jinja2.loaders import FileSystemLoader
 from bson.json_util import dumps
 from bson.objectid import ObjectId
 
-
-
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
@@ -16,11 +14,11 @@ client = MongoClient('localhost', 27017)
 # MongoDB client
 db = client.noted.user_notes
 
-@app.route('/login')
+@app.route('/')
 def login():
     return render_template('login.html')
 
-@app.route('/')
+@app.route('/home')
 def home():
     return render_template('home.html')
 
