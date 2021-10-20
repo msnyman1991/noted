@@ -59,7 +59,7 @@
                         <label for="exampleFormControlInput1" class="form-label">
                         <h4>Note Topic</h4>
                         </label>
-                        <input type="text" class="form-control" name="note_topic" required>
+                        <textarea type="text" class="form-control" name="note_topic" rows="1" required></textarea>
                     </div>
                     <div class="card-body">
                         <label for="exampleFormControlTextarea1" class="form-label">
@@ -108,8 +108,8 @@
                     document.getElementsByTagName('body')[0].appendChild(InnerDiv);
 
                     var BodyDiv = document.createElement('div');
-                    
-                    BodyDiv.innerHTML = '<form method="POST" action="/edit_note"><div class="card-body"><label for="exampleFormControlTextarea1" class="form-label"><h4>Note Topic</h4></label><input type="text" name="note_topic" class="form-control" value='+data[i].note_topic+' required></div> \
+
+                    BodyDiv.innerHTML = '<form method="POST" action="/edit_note"><div class="card-body"><label for="exampleFormControlTextarea1" class="form-label"><h4>Note Topic</h4></label><textarea class="form-control" name="note" rows="1" type="text"  required>'+data[i].note_topic+'</textarea></div> \
                                             <div class="card-body"><label for="exampleFormControlTextarea1" class="form-label"><h4>Details</h4></label><textarea class="form-control" name="note" rows="3" type="text"  required>'+data[i].note+'</textarea></div> \
                                             <input type="hidden" name="update_id" value='+data[i].note_id+' /> \
                                             <div class="card-body"><button type="submit" style="background-color: #ffffff00; border: none; font-size:40px; color: #4fd3ae" class="bi bi-check-square"></button></div> \
