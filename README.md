@@ -20,11 +20,18 @@ The default branch is the developement branch. The main branch is used as the pr
 
 ## Table of contents
 
+- [Prerequisites](#rerequisites)
 - [Quick start](#quick-start)
 - [Status](#status)
 - [What's included](#whats-included)
 - [Versioning](#versioning)
 - [Creators](#creators)
+
+## Prerequisites
+
+- Mongodb installation
+- Pymongo
+- Flask
 
 ## Quick start
 
