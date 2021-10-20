@@ -20,7 +20,7 @@ The default branch is the developement branch. The main branch is used as the pr
 
 ## Table of contents
 
-- [Prerequisites](#rerequisites)
+- [Prerequisites](#prerequisites)
 - [Quick start](#quick-start)
 - [Status](#status)
 - [What's included](#whats-included)
